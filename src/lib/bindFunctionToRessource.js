@@ -22,14 +22,15 @@ export default function(ressource, key, promise) {
     }
 
     // verify request is a promise
-    if( !ressource.request || (typeof ressource.request !== 'object' && typeof ressource.request !== 'function') || typeof ressource.request !== 'function') {
+    var request = ressource.request(cacheId, query, headers)
+
+    if (!request || (typeof request !== 'object' && typeof request !== 'function') || typeof request.then !== 'function') {
       return new promise(function(resolve, reject) {
         return reject(new Error('REQUEST FUNCTION NOT A PROMISE'))
       })
     }
 
-    // return request if cache not existing
-    return ressource.request(cacheId, query, headers).then(function(res, err) {
+    return request.then(function(res, err) {
       if (err) {
         throw err
       }

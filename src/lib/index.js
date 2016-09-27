@@ -5,6 +5,7 @@ module.exports = function(promise) {
   if (!promise) {
     promise = Promise
   }
+
   return class CacheAPI {
     constructor(ressources) {
       for (const key in ressources) {
