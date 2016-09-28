@@ -24,6 +24,16 @@ describe('api browsercache interface', function() {
         }
       }
     },
+    'badGames': {
+      path: '/bad/:id/games',
+      ttl: '1min',
+      limit: 1,
+      request: function(url, query, header) {  // eslint-disable-line no-unused-vars
+        return new Promise(function(resolve, reject) {
+          return reject(new Error('error web'));
+        })
+      }
+    },
     'getGamesById': {
       path: '/games/:id',
       ttl: '1min',
@@ -118,6 +128,15 @@ describe('api browsercache interface', function() {
 
   it('should return an error if request is not returning a promise', function(done) {
     gamesAPI.find().then(function(res) {
+      done(res)
+    }).catch(function(err) {
+      expect(err)
+      done()
+    })
+  })
+
+  it('should return an error if the request is bad', function(done) {
+    gamesAPI.badGames({ id: '6789' }, { query: 1}).then(function(res) {
       done(res)
     }).catch(function(err) {
       expect(err)
