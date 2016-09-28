@@ -9,7 +9,7 @@
     "lint:js": "./node_modules/.bin/eslint ./src/** --max-warnings 5 --cache",
     "test": "npm run build:test && npm run test:unit",
     "build:test": "node ./tests/scripts/prepare.js && ./node_modules/.bin/webpack --config ./tests/webpack.config.js",
-    "test:unit": "./node_modules/.bin/istanbul cover _mocha -- ./tests/bootstrap.js src/**/*.spec.js --compilers js:babel-core/register",
+    "test:unit": "./node_modules/.bin/mocha-phantomjs -- ./tests/client/index.html --hooks ./node_modules/mocha-phantomjs-coverage-hook/index.js",
     "start:tests": "node ./tests/server"
   },
   "engines": {
@@ -48,7 +48,10 @@
     "gulp": "^3.9.1",
     "istanbul": "^1.1.0-alpha.1",
     "jsdom": "^9.5.0",
-    "mocha": "^3.0.0",
+    "mocha": "^3.1.0",
+    "mocha-phantomjs": "^4.1.0",
+    "mocha-phantomjs-coverage-hook": "0.0.1",
+    "mocha-webpack": "^0.6.0",
     "semver": "^5.3.0",
     "webpack": "^1.13.2"
   }
